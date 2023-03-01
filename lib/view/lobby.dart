@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:music_videos/intent/control_player.dart';
 import 'package:music_videos/model/app_state.dart';
+import 'package:music_videos/view/album.dart';
 import 'package:provider/provider.dart';
 
 class Lobby extends StatelessWidget {
@@ -8,10 +9,15 @@ class Lobby extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = PlayerController();
+    PlayerController();
 
     return MaterialApp(
       title: 'Music Video',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: Color.fromARGB(113, 191, 69, 162),
+        ),
+      ),
       home: ChangeNotifierProvider(
         create: (context) => AppState(),
         child: LobbyScreen(),
@@ -28,23 +34,16 @@ class LobbyScreen extends StatelessWidget {
     var appState = context.watch<AppState>();
     var controller = PlayerController();
 
-    return SizedBox(
-      width: 594,
-      height: 1287,
-      child: Stack(
+    return Scaffold(
+      body: Stack(
         children: [
-          Image(image: AssetImage('assets/images/iPhoneSizeBG.JPG')),
+          Image(
+            image: AssetImage('assets/images/iPhoneSizeBG.jpg'),
+            color: Color.fromARGB(69, 133, 133, 133).withOpacity(0.7),
+            colorBlendMode: BlendMode.modulate,
+          ),
           Center(
-            child: SizedBox(
-              width: 300,
-              height: 200,
-              child: OutlinedButton(
-                onPressed: () {
-                  controller.toggleButton();
-                },
-                child: Text(appState.player.playing ? 'Pause' : 'Play'),
-              ),
-            ),
+            child: Album(),
           ),
         ],
       ),

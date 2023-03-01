@@ -3,6 +3,7 @@ import 'package:music_videos/model/app_state.dart';
 
 class PlayerController {
   static final PlayerController _instance = PlayerController._internal();
+
   factory PlayerController() => _instance;
   PlayerController._internal() {
     _initPlayer();
@@ -13,19 +14,36 @@ class PlayerController {
 
   void _initPlayer() async {
     await player.stop();
-    await player.setAsset('assets/audios/sample.mp3');
+    await player.setAudioSource(
+      ConcatenatingAudioSource(
+        useLazyPreparation: true,
+        children: appState.album
+            .map((e) => AudioSource.asset(e.musicSource))
+            .toList(),
+      ),
+    );
     await player.setVolume(0.2);
-    player.setLoopMode(LoopMode.one);
+    player.setLoopMode(LoopMode.all);
     player.play();
     appState.notify();
   }
 
-  void toggleButton() {
-    if (player.playing) {
-      player.pause();
+  void toggleButton(index) {
+    if (index == player.currentIndex) {
+      if (player.playing) {
+        player.pause();
+      } else {
+        player.play();
+      }
     } else {
-      player.play();
+      player.seek(Duration.zero, index: index);
+      if (!player.playing) {
+        player.play();
+      }
     }
-    appState.notify();
+  }
+
+  void snapAlbumPage(index) {
+    player.seek(Duration.zero, index: index);
   }
 }
