@@ -45,4 +45,3 @@ app.*.map.json
 
 # additional ignore
 pubspec.lock
-pubspec.lock
