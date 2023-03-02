@@ -27,10 +27,11 @@ class _ShelfWidgetState extends State<ShelfWidget> {
         viewportFraction: 0.75,
         enlargeCenterPage: true,
         enlargeFactor: 0.3,
+        // enableInfiniteScroll: false,
         initialPage: currentIndex,
         onPageChanged: (index, reason) {
           currentIndex = index;
-          controller.snapShelfWidget(currentIndex);
+          // controller.snapShelfWidget(currentIndex);
         },
       ),
       items: appState.shelf

@@ -22,29 +22,22 @@ class _AlbumWidgetState extends State<AlbumWidget> {
     var controller = PlayerController();
     var carouselController = CarouselController();
 
-    var currentIndex = 0;
-
-    // TODO :: make button style when music playing or not.
-    ButtonStyle buttonStyle;
-    if (appState.player.playing) {
-      buttonStyle = ButtonStyle();
-    } else {
-      buttonStyle = ButtonStyle();
-    }
+    int currentIndex = 0;
 
     // TODO :: animate to previous page when only 2 songs in album, end of page.
     // TODO :: resolve unhandled error - 'Null check operator used on a null value'
-    appState.player.sequenceStateStream.listen((sq) {
-      if (sq != null) {
-        if (widget.id == appState.albumIndex) {
-          if (sq.currentIndex != currentIndex) {
-            currentIndex = sq.currentIndex;
-          }
-        } else {
-          currentIndex = 0;
+    appState.player.currentIndexStream.listen((playerIdx) {
+      if (playerIdx == null) throw Error();
+
+      if (widget.id == appState.albumIndex) {
+        if (playerIdx != currentIndex) {
+          currentIndex = playerIdx;
         }
-        carouselController.animateToPage(currentIndex);
+      } else {
+        currentIndex = 0;
       }
+    }, onDone: () {
+      carouselController.animateToPage(currentIndex);
     });
 
     return CarouselSlider(
@@ -54,6 +47,7 @@ class _AlbumWidgetState extends State<AlbumWidget> {
         enlargeCenterPage: true,
         enlargeFactor: 0.25,
         scrollDirection: Axis.vertical,
+        // enableInfiniteScroll: false,
         initialPage: currentIndex,
         onPageChanged: (index, reason) {
           currentIndex = index;
@@ -61,17 +55,56 @@ class _AlbumWidgetState extends State<AlbumWidget> {
       ),
       carouselController: carouselController,
       items: widget.album.musics
-          .map((e) => OutlinedButton(
-                style: buttonStyle,
-                onPressed: () {
-                  controller.toggleButton(currentIndex);
-                },
-                child: Image(
-                  width: 300,
-                  image: AssetImage(e.coverImage),
-                ),
+          .asMap()
+          .entries
+          .map((e) => MusicCover(
+                albumIdx: widget.id,
+                musicIdx: e.key,
+                image: AssetImage(e.value.coverImage),
               ))
           .toList(),
+    );
+  }
+}
+
+class MusicCover extends StatelessWidget {
+  const MusicCover({
+    super.key,
+    required this.albumIdx,
+    required this.musicIdx,
+    required this.image,
+  });
+
+  final int albumIdx;
+  final int musicIdx;
+  final ImageProvider image;
+
+  @override
+  Widget build(BuildContext context) {
+    var appState = context.watch<AppState>();
+    var controller = PlayerController();
+
+    // TODO :: make button style when music playing or not.
+    ButtonStyle buttonStyle;
+    if (appState.player.playing) {
+      buttonStyle = ElevatedButton.styleFrom(
+        padding: EdgeInsets.zero,
+        elevation: 10,
+      );
+    } else {
+      buttonStyle = ButtonStyle(
+        padding: MaterialStatePropertyAll<EdgeInsetsGeometry>(EdgeInsets.zero),
+      );
+    }
+
+    return ElevatedButton(
+      style: buttonStyle,
+      onPressed: () {
+        controller.toggleButton(albumIdx, musicIdx);
+      },
+      child: Image(
+        image: image,
+      ),
     );
   }
 }

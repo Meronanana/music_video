@@ -10,7 +10,8 @@ class Lobby extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PlayerController();
+    var controller = PlayerController();
+    controller.play();
 
     return MaterialApp(
       title: 'Music Video',

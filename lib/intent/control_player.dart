@@ -12,7 +12,7 @@ class PlayerController {
   final appState = AppState();
   final player = AppState().player;
 
-  void _initPlayer() async {
+  Future<void> _initPlayer() async {
     await player.stop();
     await player.setAudioSource(
       ConcatenatingAudioSource(
@@ -23,20 +23,25 @@ class PlayerController {
       ),
     );
     await player.setVolume(0.2);
-    player.setLoopMode(LoopMode.all);
-    player.play();
-    appState.notify();
+    await player.setLoopMode(LoopMode.all);
   }
 
-  void toggleButton(index) {
-    if (index == player.currentIndex) {
+  Future<void> play() => player.play();
+
+  void toggleButton(albumIdx, musicIdx) async {
+    if (albumIdx != appState.albumIndex) {
+      appState.albumIndex = albumIdx;
+      await _initPlayer();
+    }
+
+    if (musicIdx == player.currentIndex) {
       if (player.playing) {
         player.pause();
       } else {
         player.play();
       }
     } else {
-      player.seek(Duration.zero, index: index);
+      player.seek(Duration.zero, index: musicIdx);
       if (!player.playing) {
         player.play();
       }
@@ -45,11 +50,14 @@ class PlayerController {
 
   void snapShelfWidget(index) {
     appState.albumIndex = index;
-    _initPlayer();
-    appState.notify();
+    print(index);
   }
 
   void snapAlbumPage(index) {
     player.seek(Duration.zero, index: index);
+  }
+
+  void increase() {
+    appState.events += 1;
   }
 }
