@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:provider/provider.dart';
 
 import '../intent/control_player.dart';
@@ -17,6 +18,7 @@ class _AlbumState extends State<Album> {
   Widget build(BuildContext context) {
     var appState = context.watch<AppState>();
     var controller = PlayerController();
+    var carouselController = CarouselController();
 
     var page = 0;
 
@@ -27,6 +29,14 @@ class _AlbumState extends State<Album> {
     } else {
       buttonStyle = ButtonStyle();
     }
+
+    appState.player.sequenceStateStream.listen((sq) {
+      if (sq == null) {
+        return;
+      } else if (sq.currentIndex != page) {
+        carouselController.jumpToPage(sq.currentIndex);
+      }
+    });
 
     return CarouselSlider(
       options: CarouselOptions(
@@ -40,6 +50,7 @@ class _AlbumState extends State<Album> {
           page = index;
         },
       ),
+      carouselController: carouselController,
       items: appState.album
           .map((e) => OutlinedButton(
                 style: buttonStyle,
