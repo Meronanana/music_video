@@ -4,3 +4,9 @@ class Music {
 
   Music(this.coverImage, this.musicSource);
 }
+
+class Album {
+  List<Music> musics;
+
+  Album(this.musics);
+}

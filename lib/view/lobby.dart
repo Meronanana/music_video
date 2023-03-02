@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:music_videos/intent/control_player.dart';
 import 'package:music_videos/model/app_state.dart';
-import 'package:music_videos/view/album.dart';
+import 'package:music_videos/view/album_widget.dart';
+import 'package:music_videos/view/shelf_widget.dart';
 import 'package:provider/provider.dart';
 
 class Lobby extends StatelessWidget {
@@ -43,7 +44,7 @@ class LobbyScreen extends StatelessWidget {
             colorBlendMode: BlendMode.modulate,
           ),
           Center(
-            child: Album(),
+            child: ShelfWidget(),
           ),
         ],
       ),

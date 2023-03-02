@@ -1,28 +1,30 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:just_audio/just_audio.dart';
+import 'package:music_videos/model/music.dart';
 import 'package:provider/provider.dart';
 
 import '../intent/control_player.dart';
 import '../model/app_state.dart';
 
-class Album extends StatefulWidget {
-  const Album({super.key});
+class AlbumWidget extends StatefulWidget {
+  const AlbumWidget({super.key, required this.id, required this.album});
+  final int id;
+  final Album album;
 
   @override
-  State<Album> createState() => _AlbumState();
+  State<AlbumWidget> createState() => _AlbumWidgetState();
 }
 
-class _AlbumState extends State<Album> {
+class _AlbumWidgetState extends State<AlbumWidget> {
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<AppState>();
     var controller = PlayerController();
     var carouselController = CarouselController();
 
-    var page = 0;
+    var currentIndex = 0;
 
-    // @TODO :: make button style when music playing or not.
+    // TODO :: make button style when music playing or not.
     ButtonStyle buttonStyle;
     if (appState.player.playing) {
       buttonStyle = ButtonStyle();
@@ -30,11 +32,18 @@ class _AlbumState extends State<Album> {
       buttonStyle = ButtonStyle();
     }
 
+    // TODO :: animate to previous page when only 2 songs in album, end of page.
+    // TODO :: resolve unhandled error - 'Null check operator used on a null value'
     appState.player.sequenceStateStream.listen((sq) {
-      if (sq == null) {
-        return;
-      } else if (sq.currentIndex != page) {
-        carouselController.jumpToPage(sq.currentIndex);
+      if (sq != null) {
+        if (widget.id == appState.albumIndex) {
+          if (sq.currentIndex != currentIndex) {
+            currentIndex = sq.currentIndex;
+          }
+        } else {
+          currentIndex = 0;
+        }
+        carouselController.animateToPage(currentIndex);
       }
     });
 
@@ -45,17 +54,17 @@ class _AlbumState extends State<Album> {
         enlargeCenterPage: true,
         enlargeFactor: 0.25,
         scrollDirection: Axis.vertical,
-        initialPage: page,
+        initialPage: currentIndex,
         onPageChanged: (index, reason) {
-          page = index;
+          currentIndex = index;
         },
       ),
       carouselController: carouselController,
-      items: appState.album
+      items: widget.album.musics
           .map((e) => OutlinedButton(
                 style: buttonStyle,
                 onPressed: () {
-                  controller.toggleButton(page);
+                  controller.toggleButton(currentIndex);
                 },
                 child: Image(
                   width: 300,

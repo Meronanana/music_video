@@ -17,7 +17,7 @@ class PlayerController {
     await player.setAudioSource(
       ConcatenatingAudioSource(
         useLazyPreparation: true,
-        children: appState.album
+        children: appState.shelf[appState.albumIndex].musics
             .map((e) => AudioSource.asset(e.musicSource))
             .toList(),
       ),
@@ -41,6 +41,12 @@ class PlayerController {
         player.play();
       }
     }
+  }
+
+  void snapShelfWidget(index) {
+    appState.albumIndex = index;
+    _initPlayer();
+    appState.notify();
   }
 
   void snapAlbumPage(index) {
