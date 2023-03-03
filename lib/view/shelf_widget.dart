@@ -24,7 +24,7 @@ class _ShelfWidgetState extends State<ShelfWidget> {
     List<AlbumWidget> carouselItems = appState.shelf
         .asMap()
         .entries
-        .map((e) => AlbumWidget(e.key, e.value))
+        .map((e) => AlbumWidget(id: e.key, album: e.value))
         .toList();
 
     return CarouselSlider(
@@ -37,11 +37,9 @@ class _ShelfWidgetState extends State<ShelfWidget> {
         initialPage: currentIndex,
         onPageChanged: (index, reason) {
           currentIndex = index;
-          // controller.snapShelfWidget(currentIndex);
         },
       ),
       items: carouselItems,
-      // items: [TestWidget(), TestWidget(), TestWidget()],
     );
   }
 }

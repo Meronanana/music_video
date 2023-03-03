@@ -47,13 +47,4 @@ class PlayerController {
       }
     }
   }
-
-  void snapShelfWidget(index) {
-    appState.albumIndex = index;
-    print(index);
-  }
-
-  void snapAlbumPage(index) {
-    player.seek(Duration.zero, index: index);
-  }
 }

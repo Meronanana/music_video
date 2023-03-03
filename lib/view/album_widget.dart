@@ -9,18 +9,7 @@ import '../intent/control_player.dart';
 import '../model/app_state.dart';
 
 class AlbumWidget extends StatefulWidget {
-  static final Map<int, AlbumWidget> _instanceList = Map();
-
-  factory AlbumWidget(id, album) {
-    if (_instanceList[id] != null) {
-      return _instanceList[id]!;
-    } else {
-      _instanceList[id] = AlbumWidget._constructor(id: id, album: album);
-      return _instanceList[id]!;
-    }
-  }
-
-  const AlbumWidget._constructor({required this.id, required this.album});
+  const AlbumWidget({super.key, required this.id, required this.album});
 
   final int id;
   final Album album;
@@ -41,13 +30,12 @@ class _AlbumWidgetState extends State<AlbumWidget> {
     int currentIndex = 0;
 
     // TODO :: animate to previous page when only 2 songs in album, end of page.
-    // TODO :: resolve unhandled error - 'Null check operator used on a null value'
     listener = appState.player.currentIndexStream.listen((playerIdx) {
       if (playerIdx == null) throw Error();
 
       if (widget.id == appState.albumIndex) {
         if (playerIdx != currentIndex) {
-          currentIndex = playerIdx!;
+          currentIndex = playerIdx;
         }
       } else {
         currentIndex = 0;
