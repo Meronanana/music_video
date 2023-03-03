@@ -2,10 +2,10 @@ import 'package:just_audio/just_audio.dart';
 import 'package:music_videos/model/app_state.dart';
 
 class PlayerController {
-  static final PlayerController _instance = PlayerController._internal();
+  static final PlayerController _instance = PlayerController._constructor();
 
   factory PlayerController() => _instance;
-  PlayerController._internal() {
+  PlayerController._constructor() {
     _initPlayer();
   }
 
@@ -55,9 +55,5 @@ class PlayerController {
 
   void snapAlbumPage(index) {
     player.seek(Duration.zero, index: index);
-  }
-
-  void increase() {
-    appState.events += 1;
   }
 }

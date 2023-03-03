@@ -31,7 +31,6 @@ class AppState extends ChangeNotifier {
   ];
 
   int albumIndex = 0;
-  int events = 0;
 
   void notify() {
     notifyListeners();

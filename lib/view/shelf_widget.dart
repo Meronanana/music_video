@@ -21,6 +21,12 @@ class _ShelfWidgetState extends State<ShelfWidget> {
 
     var currentIndex = 0;
 
+    List<AlbumWidget> carouselItems = appState.shelf
+        .asMap()
+        .entries
+        .map((e) => AlbumWidget(e.key, e.value))
+        .toList();
+
     return CarouselSlider(
       options: CarouselOptions(
         height: 1000,
@@ -34,11 +40,8 @@ class _ShelfWidgetState extends State<ShelfWidget> {
           // controller.snapShelfWidget(currentIndex);
         },
       ),
-      items: appState.shelf
-          .asMap()
-          .entries
-          .map((e) => AlbumWidget(id: e.key, album: e.value))
-          .toList(),
+      items: carouselItems,
+      // items: [TestWidget(), TestWidget(), TestWidget()],
     );
   }
 }

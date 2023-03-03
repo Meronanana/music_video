@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:music_videos/model/music.dart';
@@ -7,7 +9,19 @@ import '../intent/control_player.dart';
 import '../model/app_state.dart';
 
 class AlbumWidget extends StatefulWidget {
-  const AlbumWidget({super.key, required this.id, required this.album});
+  static final Map<int, AlbumWidget> _instanceList = Map();
+
+  factory AlbumWidget(id, album) {
+    if (_instanceList[id] != null) {
+      return _instanceList[id]!;
+    } else {
+      _instanceList[id] = AlbumWidget._constructor(id: id, album: album);
+      return _instanceList[id]!;
+    }
+  }
+
+  const AlbumWidget._constructor({required this.id, required this.album});
+
   final int id;
   final Album album;
 
@@ -16,6 +30,8 @@ class AlbumWidget extends StatefulWidget {
 }
 
 class _AlbumWidgetState extends State<AlbumWidget> {
+  late StreamSubscription listener;
+
   @override
   Widget build(BuildContext context) {
     var appState = context.watch<AppState>();
@@ -26,19 +42,18 @@ class _AlbumWidgetState extends State<AlbumWidget> {
 
     // TODO :: animate to previous page when only 2 songs in album, end of page.
     // TODO :: resolve unhandled error - 'Null check operator used on a null value'
-    appState.player.currentIndexStream.listen((playerIdx) {
+    listener = appState.player.currentIndexStream.listen((playerIdx) {
       if (playerIdx == null) throw Error();
 
       if (widget.id == appState.albumIndex) {
         if (playerIdx != currentIndex) {
-          currentIndex = playerIdx;
+          currentIndex = playerIdx!;
         }
       } else {
         currentIndex = 0;
       }
-    }, onDone: () {
       carouselController.animateToPage(currentIndex);
-    });
+    }, cancelOnError: true);
 
     return CarouselSlider(
       options: CarouselOptions(
@@ -64,6 +79,12 @@ class _AlbumWidgetState extends State<AlbumWidget> {
               ))
           .toList(),
     );
+  }
+
+  @override
+  void dispose() {
+    listener.cancel();
+    super.dispose();
   }
 }
 
