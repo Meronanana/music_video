@@ -1,12 +1,14 @@
-class Music {
-  final coverImage;
-  final musicSource;
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-  Music(this.coverImage, this.musicSource);
+class Music {
+  String coverImage; // image link
+  String musicSource; // music link
+
+  Music({required this.coverImage, required this.musicSource});
 }
 
 class Album {
   List<Music> musics;
 
-  Album(this.musics);
+  Album({required this.musics});
 }

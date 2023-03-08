@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "918558240173",
+    "firebase_url": "https://music-videos-jjs-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "music-videos-jjs",
+    "storage_bucket": "music-videos-jjs.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:918558240173:android:587b6d8e618f618478c524",
+        "android_client_info": {
+          "package_name": "com.example.music_videos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "918558240173-v94u2dd46ruqpd7j9cii3nn14dblbkai.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHEQiS38a1C4DwAT_qs50f_k2QXUbU0ZE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "918558240173-v94u2dd46ruqpd7j9cii3nn14dblbkai.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "918558240173-0g8s5vlfbu5fhsh4br3335f2r6a95uo2.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.musicVideos"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

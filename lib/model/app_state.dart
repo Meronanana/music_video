@@ -10,24 +10,35 @@ class AppState extends ChangeNotifier {
 
   AudioPlayer player = AudioPlayer();
   List<Album> shelf = [
-    Album([
-      Music('assets/images/sample.jpg', 'assets/audios/sample.mp3'),
-      Music('assets/images/sample2.jpg', 'assets/audios/sample2.mp3'),
+    Album(musics: [
+      Music(
+        coverImage: 'assets/images/sample.jpg',
+        musicSource: 'assets/audios/sample.mp3',
+      ),
+      Music(
+        coverImage: 'assets/images/sample2.jpg',
+        musicSource: 'assets/audios/sample2.mp3',
+      ),
     ]),
-    Album([
-      Music('assets/images/sample3.jpeg', 'assets/audios/sample3.mp3'),
-      Music('assets/images/sample4.png', 'assets/audios/sample4.mp3'),
+    Album(musics: [
+      Music(
+          coverImage: 'assets/images/sample3.jpeg',
+          musicSource: 'assets/audios/sample3.mp3'),
+      Music(
+        coverImage: 'assets/images/sample4.png',
+        musicSource: 'assets/audios/sample4.mp3',
+      ),
     ]),
-    Album([
-      Music('assets/images/sample5.jpg', 'assets/audios/sample5.mp3'),
-      Music('assets/images/sample6.jpeg', 'assets/audios/sample6.mp3'),
+    Album(musics: [
+      Music(
+        coverImage: 'assets/images/sample5.jpg',
+        musicSource: 'assets/audios/sample5.mp3',
+      ),
+      Music(
+        coverImage: 'assets/images/sample6.jpeg',
+        musicSource: 'assets/audios/sample6.mp3',
+      ),
     ]),
-  ];
-
-  List<Music> album = [
-    Music('assets/images/sample3.jpeg', 'assets/audios/sample3.mp3'),
-    Music('assets/images/sample4.png', 'assets/audios/sample4.mp3'),
-    Music('assets/images/sample5.jpg', 'assets/audios/sample5.mp3'),
   ];
 
   int albumIndex = 0;

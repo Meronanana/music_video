@@ -22,7 +22,7 @@ class PlayerController {
             .toList(),
       ),
     );
-    await player.setVolume(0.2);
+    await player.setVolume(0.5);
     await player.setLoopMode(LoopMode.all);
   }
 

@@ -66,6 +66,8 @@ class _AlbumWidgetState extends State<AlbumWidget> {
                 image: AssetImage(e.value.coverImage),
               ))
           .toList(),
+      // items:
+      //     widget.album.musics.asMap().entries.map((e) => YTSample()).toList(),
     );
   }
 
