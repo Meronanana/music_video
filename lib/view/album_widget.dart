@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:music_videos/intent/fetch_data.dart';
 import 'package:music_videos/model/music.dart';
 import 'package:provider/provider.dart';
 
@@ -63,7 +64,8 @@ class _AlbumWidgetState extends State<AlbumWidget> {
           .map((e) => MusicCover(
                 albumIdx: widget.id,
                 musicIdx: e.key,
-                image: AssetImage(e.value.coverImage),
+                image: NetworkImage(e.value.imageUrl),
+                // image: AssetImage(e.value.imageUrl),
               ))
           .toList(),
       // items:

@@ -18,12 +18,13 @@ class PlayerController {
       ConcatenatingAudioSource(
         useLazyPreparation: true,
         children: appState.shelf[appState.albumIndex].musics
-            .map((e) => AudioSource.asset(e.musicSource))
+            .map((e) => AudioSource.uri(Uri.parse(e.musicUrl)))
             .toList(),
       ),
     );
     await player.setVolume(0.5);
     await player.setLoopMode(LoopMode.all);
+    await player.play();
   }
 
   Future<void> play() => player.play();
