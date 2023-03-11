@@ -9,10 +9,12 @@ class AppState extends ChangeNotifier {
   factory AppState() => _instance;
   AppState._internal();
 
+  bool tutorial = true;
   FirebaseFirestore firestore = FirebaseFirestore.instance;
   AudioPlayer player = AudioPlayer();
 
   List<Album> shelf = [];
+  // dummy data
   // List<Album> shelf = [
   //   Album(musics: [
   //     Music(

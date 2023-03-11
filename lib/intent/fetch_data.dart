@@ -1,4 +1,4 @@
-import 'package:music_videos/intent/control_player.dart';
+import 'package:music_videos/intent/player_controller.dart';
 import 'package:music_videos/model/app_state.dart';
 import 'package:music_videos/model/music.dart';
 

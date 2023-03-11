@@ -6,7 +6,7 @@ import 'package:music_videos/intent/fetch_data.dart';
 import 'package:music_videos/model/music.dart';
 import 'package:provider/provider.dart';
 
-import '../intent/control_player.dart';
+import '../intent/player_controller.dart';
 import '../model/app_state.dart';
 
 class AlbumWidget extends StatefulWidget {

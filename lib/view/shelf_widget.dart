@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:music_videos/view/album_widget.dart';
 import 'package:provider/provider.dart';
 
-import '../intent/control_player.dart';
+import '../intent/player_controller.dart';
 import '../model/app_state.dart';
 
 class ShelfWidget extends StatefulWidget {
