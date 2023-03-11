@@ -9,15 +9,15 @@ class FetchData {
 
     List<Music> tempAlbum = [];
     await shelfCollection.get().then((value) {
-      value.docs.forEach((e) {
+      for (var e in value.docs) {
         tempAlbum.add(Music(
             imageUrl: e.data()['imageUrl'], musicUrl: e.data()['musicUrl']));
-      });
+      }
     });
 
     appState.shelf = [Album(musics: tempAlbum)];
 
-    var controller = PlayerController();
+    PlayerController();
 
     return true;
   }
