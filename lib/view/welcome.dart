@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:music_videos/intent/router_controller.dart';
+import 'package:music_videos/local_notification.dart';
 import 'package:music_videos/model/app_state.dart';
 import 'package:music_videos/view/set_alarm.dart';
 import 'package:provider/provider.dart';
@@ -27,8 +28,12 @@ class Welcome extends StatelessWidget {
                 showCupertinoModalPopup<DateTime?>(
                   context: context,
                   builder: (context) => SetAlarm(isTutorial: appState.tutorial),
-                ).then((value) {
-                  // 알람 생성하기
+                ).then((value) async {
+                  // TODO: 알람 생성하기
+                  print(value);
+                  if (value != null) {
+                    LocalNotification.requestPermission();
+                  }
                   RouterController().tutorialDone();
                 });
               },

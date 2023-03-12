@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:music_videos/intent/fetch_data.dart';
-import 'package:music_videos/intent/router_controller.dart';
-import 'package:music_videos/view/lobby.dart';
+import 'package:music_videos/model/app_state.dart';
+import 'package:music_videos/view/new_lobby.dart';
 import 'package:music_videos/view/welcome.dart';
 import 'package:provider/provider.dart';
-
-import '../model/app_state.dart';
 
 class AppRouter extends StatelessWidget {
   const AppRouter({super.key});
@@ -14,11 +11,11 @@ class AppRouter extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<AppState>();
 
-    // appState.tutorial은 AsyncStorage 통해서 업데이트 하기.
+    // TODO: appState.tutorial은 AsyncStorage 통해서 업데이트 하기.
     if (appState.tutorial) {
       return Welcome();
     } else {
-      return Lobby();
+      return NewLobby();
     }
   }
 }

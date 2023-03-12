@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:music_videos/firebase_options.dart';
+import 'package:music_videos/local_notification.dart';
 import 'package:music_videos/model/app_state.dart';
 import 'package:music_videos/view/router.dart';
 import 'package:provider/provider.dart';
@@ -16,6 +17,8 @@ void main() async {
   } else {
     Firebase.app();
   }
+
+  await LocalNotification.initialize();
 
   // runApp(const Lobby());
   runApp(const Init());
