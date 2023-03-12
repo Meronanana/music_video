@@ -14,6 +14,7 @@ class AppRouter extends StatelessWidget {
   Widget build(BuildContext context) {
     var appState = context.watch<AppState>();
 
+    // appState.tutorial은 AsyncStorage 통해서 업데이트 하기.
     if (appState.tutorial) {
       return Welcome();
     } else {
