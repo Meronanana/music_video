@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:music_videos/local_notification.dart';
+import 'package:music_videos/view/music_cover_widget.dart';
 import 'package:music_videos/view/set_alarm.dart';
 
 class NewLobby extends StatelessWidget {
@@ -8,8 +10,7 @@ class NewLobby extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LocalNotification.testNotification();
-
+    LocalNotification.testSchedule();
     return Scaffold(
       body: Stack(
         children: [
@@ -19,17 +20,29 @@ class NewLobby extends StatelessWidget {
             colorBlendMode: BlendMode.modulate,
           ),
           Center(
-              child: ElevatedButton(
-            onPressed: () {
-              showCupertinoModalPopup<DateTime?>(
-                context: context,
-                builder: (context) => SetAlarm(isTutorial: false),
-              ).then((value) {
-                // TODO: 알람 생성하기
-              });
-            },
-            child: Text('알람 설정하기'),
-          )),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                MusicCoverWidget(),
+                ElevatedButton(
+                  onPressed: () {
+                    showCupertinoModalPopup<DateTime?>(
+                      context: context,
+                      builder: (context) => SetAlarm(isTutorial: false),
+                    ).then(
+                      (date) async {
+                        print(date);
+                        if (date != null) {
+                          LocalNotification.setNotification(date);
+                        }
+                      },
+                    );
+                  },
+                  child: Text('알람 설정하기'),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

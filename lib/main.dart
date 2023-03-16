@@ -1,10 +1,13 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:music_videos/firebase_options.dart';
+import 'package:music_videos/intent/fetch_data.dart';
 import 'package:music_videos/local_notification.dart';
 import 'package:music_videos/model/app_state.dart';
 import 'package:music_videos/view/router.dart';
 import 'package:provider/provider.dart';
+import 'package:timezone/timezone.dart' as tz;
+import 'package:timezone/data/latest_all.dart' as tz;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,6 +22,10 @@ void main() async {
   }
 
   await LocalNotification.initialize();
+  tz.initializeTimeZones();
+  tz.setLocalLocation(tz.getLocation('Asia/Seoul'));
+
+  FetchData.fetchData();
 
   // runApp(const Lobby());
   runApp(const Init());

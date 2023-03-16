@@ -1,4 +1,5 @@
 import 'package:just_audio/just_audio.dart';
+import 'package:music_videos/intent/fetch_data.dart';
 import 'package:music_videos/model/app_state.dart';
 
 class PlayerController {
@@ -24,28 +25,19 @@ class PlayerController {
     );
     await player.setVolume(0.5);
     await player.setLoopMode(LoopMode.all);
-    await player.play();
   }
 
   Future<void> play() => player.play();
 
-  void toggleButton(albumIdx, musicIdx) async {
-    if (albumIdx != appState.albumIndex) {
-      appState.albumIndex = albumIdx;
-      await _initPlayer();
+  void toggleButton() async {
+    if (appState.shelf == []) {
+      FetchData.fetchData();
     }
 
-    if (musicIdx == player.currentIndex) {
-      if (player.playing) {
-        player.pause();
-      } else {
-        player.play();
-      }
+    if (player.playing) {
+      player.pause();
     } else {
-      player.seek(Duration.zero, index: musicIdx);
-      if (!player.playing) {
-        player.play();
-      }
+      player.play();
     }
   }
 }

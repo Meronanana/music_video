@@ -113,7 +113,7 @@ class MusicCover extends StatelessWidget {
     return ElevatedButton(
       style: buttonStyle,
       onPressed: () {
-        controller.toggleButton(albumIdx, musicIdx);
+        // controller.toggleButton(albumIdx, musicIdx);
       },
       child: Image(
         image: image,

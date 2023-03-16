@@ -28,11 +28,11 @@ class Welcome extends StatelessWidget {
                 showCupertinoModalPopup<DateTime?>(
                   context: context,
                   builder: (context) => SetAlarm(isTutorial: appState.tutorial),
-                ).then((value) async {
-                  // TODO: 알람 생성하기
-                  print(value);
-                  if (value != null) {
+                ).then((date) async {
+                  print(date);
+                  if (date != null) {
                     LocalNotification.requestPermission();
+                    LocalNotification.setNotification(date);
                   }
                   RouterController().tutorialDone();
                 });
